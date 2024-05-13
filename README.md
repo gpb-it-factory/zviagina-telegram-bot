@@ -23,6 +23,8 @@ TelegramBot --> User: Ответ
 @enduml
 ```
 
+![img_1.png](img_1.png)
+
 ## Запуск проекта
 * Клонируйте репозиторий на локальную машину: `git clone <git@github.com:gpb-it-factory/zviagina-telegram-bot.git>`.
 * Установите необходимые зависимости: `mvn install` (если используется Maven).
