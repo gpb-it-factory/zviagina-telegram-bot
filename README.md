@@ -9,7 +9,7 @@
 
 ```plantuml
 @startuml
-participant User
+actor User
 participant TelegramBot
 participant MiddlewareBackend
 participant Backend
@@ -23,7 +23,7 @@ TelegramBot --> User: Ответ
 @enduml
 ```
 
-![img_1.png](img_1.png)
+![img_2.png](img_2.png)![img_1.png](img_1.png)
 
 ## Запуск проекта
 * Клонируйте репозиторий на локальную машину: `git clone <git@github.com:gpb-it-factory/zviagina-telegram-bot.git>`.
@@ -32,5 +32,5 @@ TelegramBot --> User: Ответ
 * Запустите приложение: `mvn spring-boot:run`.
 
 ## Использование
-* Найдите бота в Telegram по имени или используйте ссылку на бота.
-* Запустите бота и следуйте инструкциям для аутентификации и использования функционала "Мини-банка".
+* Найдите бота в Telegram по имени или используйте ссылку на [бота](здесь_однажды_будет_ссылка).
+* Запустите бота и следуйте инструкциям для использования функционала "Мини-банка".
