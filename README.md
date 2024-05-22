@@ -23,7 +23,7 @@ TelegramBot --> User: Ответ
 @enduml
 ```
 
-![img_2.png](img_2.png)![img_1.png](img_1.png)
+![img_2.png](img_2.png)
 
 ## Запуск проекта
 * Клонируйте репозиторий на локальную машину: `git clone <git@github.com:gpb-it-factory/zviagina-telegram-bot.git>`.
