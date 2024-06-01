@@ -4,22 +4,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import lombok.Data;
+import lombok.Getter;
 
 @Configuration
 @Data
+@Getter
 @PropertySource("application.properties")
 public class BotConfig {
 
-//    @Value("${telegram.bot.name}")
-//    private String botName;
-//
-//    @Value("${telegram.bot.token}")
-//    private String botToken;
-
     @Value("${bot.name}")
-    String botName;
+    private String botName;
 
     @Value("${bot.token}")
-    String botToken;
+    private String botToken;
+
+//    public String getBotName() {
+//        return botName;
+//    }
+//    public String getBotToken() {
+//        return botToken;
+//    }
 
 }

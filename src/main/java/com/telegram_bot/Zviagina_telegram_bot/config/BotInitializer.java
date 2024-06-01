@@ -1,6 +1,7 @@
 package com.telegram_bot.Zviagina_telegram_bot.config;
 
 import com.telegram_bot.Zviagina_telegram_bot.service.MyTelegramBot;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -10,6 +11,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 @Component
+@Slf4j
 public class BotInitializer {
     @Autowired
     MyTelegramBot bot;
@@ -20,7 +22,7 @@ public class BotInitializer {
         try {
             api.registerBot(bot);
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            log.error("Failed to initialize bot", e);
         }
     }
 }
