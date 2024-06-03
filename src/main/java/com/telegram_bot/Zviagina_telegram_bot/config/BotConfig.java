@@ -9,7 +9,7 @@ import lombok.Getter;
 @Configuration
 @Data
 @Getter
-@PropertySource("application.properties")
+@PropertySource("application.yml")
 public class BotConfig {
 
     @Value("${bot.name}")
