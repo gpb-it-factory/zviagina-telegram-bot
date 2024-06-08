@@ -39,14 +39,12 @@ TelegramBot --> User: Ответ
     cd zviagina-telegram-bot
     ```
 
-2. Создайте файл `application.yml` в папке `src/main/resources` и добавьте в него следующие строки:
+2. Добавьте в файл `application.yml` в папке `src/main/resources` имя и токен бота, полученные от [BotFather](https://core.telegram.org/bots#botfather):
     ```properties
     bot:
       name: YourBotName
       token: YourBotToken
     ```
-
-Замените `YourBotName` и `YourBotToken` на реальные значения, полученные от [BotFather](https://core.telegram.org/bots#botfather).
 
 ## Запуск
 
