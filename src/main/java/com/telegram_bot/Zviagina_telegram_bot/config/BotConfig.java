@@ -1,20 +1,14 @@
 package com.telegram_bot.Zviagina_telegram_bot.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import lombok.Data;
-import lombok.Getter;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 @Data
-@Getter
-@PropertySource("application.yml")
+@ConfigurationProperties(prefix = "bot")
 public class BotConfig {
-
-    @Value("${bot.name}")
-    private String botName;
-
-    @Value("${bot.token}")
-    private String botToken;
+    private String name;
+    private String token;
 }
+

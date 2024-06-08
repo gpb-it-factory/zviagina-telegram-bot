@@ -75,11 +75,12 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return config.getBotName();
+        return config.getName();
     }
 
     @Override
     public String getBotToken() {
-        return config.getBotToken();
+        return config.getToken();
     }
 }
+
