@@ -1,7 +1,9 @@
 package com.telegram_bot.Zviagina_telegram_bot.service;
 
 import com.telegram_bot.Zviagina_telegram_bot.config.BotConfig;
+import com.telegram_bot.Zviagina_telegram_bot.handler.CommandHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -9,15 +11,43 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import lombok.NonNull;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Component
 @Slf4j
 public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final BotConfig config;
+    private final List<CommandHandler> commandHandlers;
 
-    public MyTelegramBot(BotConfig config) {
+    @Autowired
+    public MyTelegramBot(BotConfig config, List<CommandHandler> commandHandlers) {
         this.config = config;
+        this.commandHandlers = commandHandlers;
+    }
+
+    @PostConstruct
+    public void init() {
+        try {
+            TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
+            telegramBotsApi.registerBot(this);
+            log.info("Bot registered successfully: {}", getBotUsername());
+        } catch (TelegramApiException e) {
+            log.error("Failed to initialize bot", e);
+        }
+    }
+
+    @Override
+    public String getBotUsername() {
+        return config.getName();
+    }
+
+    @Override
+    public String getBotToken() {
+        return config.getToken();
     }
     @Override
     public void onUpdateReceived(@NonNull Update update) {
@@ -33,33 +63,14 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     }
 
     private void handleIncomingMessage(long chatId, String messageText) {
-        if (messageText.equalsIgnoreCase("Ping")) {
-            handlePingCommand(chatId, messageText);
-        } else if (messageText.equalsIgnoreCase("/start")) {
-            handleStartCommand(chatId, messageText);
-        } else {
-            handleUnknownCommand(chatId, messageText);
+        for (CommandHandler handler : commandHandlers) {
+            if (handler.canHandle(messageText)) {
+                String response = handler.handle(chatId, messageText);
+                sendTextMessage(chatId, response);
+                return;
+            }
         }
-    }
-
-    private void handlePingCommand(long chatId, String messageText) {
-        sendTextMessage(chatId, "Pong");
-        log.info("Received message: {}", messageText);
-    }
-
-    private void handleStartCommand(long chatId, String messageText) {
-        startCommandReceived(chatId);
-        log.info("Received message: {}", messageText);
-    }
-
-    private void handleUnknownCommand(long chatId, String messageText) {
-        sendTextMessage(chatId, "Я пока могу обрабатывать только две команды: \"/start\" и \"Ping\"");
-        log.info("Received message: {}", messageText);
-    }
-
-    private void startCommandReceived(long chatId) {
-        String answer = "Добро пожаловать в телеграм-бот мини-банка. Напишите мне \"Ping\" - и я отвечу \"Pong\"!";
-        sendTextMessage(chatId, answer);
+        sendTextMessage(chatId, "Я пока могу обрабатывать только две команды: \\\"/start\\\" и \\\"Ping\\\"");
     }
 
     private void sendTextMessage(Long chatId, String text) {
@@ -71,16 +82,6 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             log.error("Failed to send message", e);
         }
-    }
-
-    @Override
-    public String getBotUsername() {
-        return config.getName();
-    }
-
-    @Override
-    public String getBotToken() {
-        return config.getToken();
     }
 }
 
