@@ -3,6 +3,7 @@ name: GPB IT Factory CI with Gradle
 on:
   push:
     branches:
+      - feature/4
       - trunk
   pull_request:
     types: [ opened, reopened, synchronize ]
