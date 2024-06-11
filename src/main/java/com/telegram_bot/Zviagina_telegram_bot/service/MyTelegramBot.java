@@ -70,7 +70,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
                 return;
             }
         }
-        sendTextMessage(chatId, "Я пока могу обрабатывать только две команды: \\\"/start\\\" и \\\"Ping\\\"");
+        sendTextMessage(chatId, "Я пока могу обрабатывать только две команды: \"/start\" и \"Ping\"");
     }
 
     private void sendTextMessage(Long chatId, String text) {
