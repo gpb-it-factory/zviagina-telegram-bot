@@ -1,0 +1,37 @@
+name: GPB IT Factory CI with Gradle
+
+on:
+  push:
+    branches:
+      - trunk
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+    branches:
+      - trunk
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        env:
+          BOT_NAME: ${{ secrets.BOT_NAME }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: ./gradlew build
+
+#      - name: Run tests with Gradle
+#        run: ./gradlew test
