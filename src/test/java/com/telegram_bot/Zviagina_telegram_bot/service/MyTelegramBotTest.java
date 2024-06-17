@@ -100,13 +100,4 @@ public class MyTelegramBotTest {
         });
     }
 
-    @Test
-    public void testHandleIncorrectCommand() {
-        long chatId = 12345L;
-        String incorrectCommand = "unknown";
-
-        when(startCommandHandler.canHandle(incorrectCommand)).thenReturn(false);
-        myTelegramBot.handleIncomingMessage(chatId, incorrectCommand);
-        verify(startCommandHandler, never()).handle(eq(chatId), eq(incorrectCommand));
-    }
 }
