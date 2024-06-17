@@ -11,4 +11,3 @@ public class BotConfig {
     private String name;
     private String token;
 }
-

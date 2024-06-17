@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class MyTelegramBotTest {
@@ -31,7 +31,6 @@ public class MyTelegramBotTest {
         when(botConfig.getName()).thenReturn("TestBotName");
         when(botConfig.getToken()).thenReturn("TestBotToken");
 
-        // Инициализация commandHandlers вручную с моком
         myTelegramBot = new MyTelegramBot(botConfig, Collections.singletonList(startCommandHandler));
     }
 
@@ -90,5 +89,24 @@ public class MyTelegramBotTest {
 
         assertNotNull(myTelegramBot);
         verify(update, times(1)).getMessage();
+    }
+
+    @Test
+    public void testHandleNullMessage() {
+        Update nullUpdate = null;
+
+        assertThrows(NullPointerException.class, () -> {
+            myTelegramBot.onUpdateReceived(nullUpdate);
+        });
+    }
+
+    @Test
+    public void testHandleIncorrectCommand() {
+        long chatId = 12345L;
+        String incorrectCommand = "unknown";
+
+        when(startCommandHandler.canHandle(incorrectCommand)).thenReturn(false);
+        myTelegramBot.handleIncomingMessage(chatId, incorrectCommand);
+        verify(startCommandHandler, never()).handle(eq(chatId), eq(incorrectCommand));
     }
 }

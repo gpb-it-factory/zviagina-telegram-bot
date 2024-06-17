@@ -62,7 +62,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void handleIncomingMessage(long chatId, String messageText) {
+    void handleIncomingMessage(long chatId, String messageText) {
         for (CommandHandler handler : commandHandlers) {
             if (handler.canHandle(messageText)) {
                 String response = handler.handle(chatId, messageText);
