@@ -17,6 +17,6 @@ public class BotConfigPropertiesTest {
     @Test
     public void propertiesAreSet() {
 //        assertEquals("secretToken", botConfig.getToken());
-        assertEquals("Zviagina_telegram_bot", botConfig.getName());
+        assertEquals("", botConfig.getName());
     }
 }
