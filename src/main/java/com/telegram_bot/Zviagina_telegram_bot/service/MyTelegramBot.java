@@ -51,25 +51,32 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     }
     @Override
     public void onUpdateReceived(@NonNull Update update) {
+        log.debug("Received update: {}", update);
         if (update.getMessage() == null) {
+            log.debug("Received update does not contain a message.");
             return;
         }
         final Message message = update.getMessage();
         long chatId = message.getChatId();
         if (message.hasText()) {
             String messageText = message.getText();
+            log.debug("Received text message from chat ID {}: {}", chatId, messageText);
             handleIncomingMessage(chatId, messageText);
+        } else {
+            log.debug("Received message does not contain text.");
         }
     }
 
     private void handleIncomingMessage(long chatId, String messageText) {
         for (CommandHandler handler : commandHandlers) {
             if (handler.canHandle(messageText)) {
+                log.debug("Handling command: {}", messageText);
                 String response = handler.handle(chatId, messageText);
                 sendTextMessage(chatId, response);
                 return;
             }
         }
+        log.info("No handler found for message: '{}'. Notifying user.", messageText);
         sendTextMessage(chatId, "Я пока могу обрабатывать только две команды: \"/start\" и \"Ping\"");
     }
 
@@ -79,9 +86,9 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         message.setText(text);
         try {
             execute(message);
+            log.debug("Sent message to chat ID {}: {}", chatId, text);
         } catch (TelegramApiException e) {
             log.error("Failed to send message", e);
         }
     }
 }
-
