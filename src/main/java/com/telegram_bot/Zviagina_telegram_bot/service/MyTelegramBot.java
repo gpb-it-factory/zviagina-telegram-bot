@@ -91,4 +91,5 @@ public class MyTelegramBot extends TelegramLongPollingBot {
             log.error("Failed to send message", e);
         }
     }
+
 }
