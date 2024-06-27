@@ -18,12 +18,14 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
+    testImplementation 'ch.qos.logback:logback-classic:1.2.3'
 
     // Test dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-core:4.0.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'
     testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'ch.qos.logback:logback-classic:1.2.3'
     //    implementation 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
