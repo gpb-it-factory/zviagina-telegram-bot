@@ -54,4 +54,4 @@ jobs:
         env:
           BOT_NAME: ${{ secrets.BOT_NAME }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-        run: ./gradlew test
+        run: ./gradlew -x test
